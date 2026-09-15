@@ -8,10 +8,9 @@ builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromSeconds(30);
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
-
 });
 
 var app = builder.Build();
@@ -28,7 +27,7 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
-//Enable
+// Enable Session
 app.UseSession();
 
 app.UseAuthorization();

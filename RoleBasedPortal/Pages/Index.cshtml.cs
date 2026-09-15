@@ -6,10 +6,7 @@ namespace RoleBasedPortal.Pages
 {
     public class IndexModel : PageModel
     {
-
-
         [BindProperty]
-
         public string Username { get; set; } = "";
 
         [BindProperty]
@@ -19,15 +16,18 @@ namespace RoleBasedPortal.Pages
 
         public void OnGet()
         {
-
+            HttpContext.Session.Clear();
         }
 
         public IActionResult OnPost()
         {
-            var user = ApplicationData.Users.FirstOrDefault((u) => u.Username == Username && u.Password == Password);
+            var user = ApplicationData.Users.FirstOrDefault(u =>
+                u.Username == Username &&
+                u.Password == Password);
+
             if (user == null)
             {
-                ErrorMessage = "Invalid username or password";
+                ErrorMessage = "Invalid username or password.";
                 return Page();
             }
 

@@ -1,4 +1,109 @@
-﻿@page
+@page
 @model RoleBasedPortal.Pages.AddInstructorModel
 @{
+    ViewData["Title"] = "Add Instructor";
 }
+
+<div class="portal-container">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Academic Portal</h3>
+        </div>
+
+        <div class="user-summary">
+            <div class="user-icon">&#128100;</div>
+            <h5>@Model.CurrentUser?.FullName</h5>
+            <span>
+                @Model.CurrentUser?.Role
+            </span>
+        </div>
+
+        <nav class="sidebar-menu">
+            <a asp-page="/Profile" class="menu-item">
+                Profile
+            </a>
+            <a asp-page="/AddInstructor" class="menu-item active">
+                Add Instructor
+            </a>
+            <a asp-page="/Index" class="menu-item">
+                Log Out
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <div class="top-header">
+            <div>
+                <h2>Add New Instructor</h2>
+                <p>Administrator Management</p>
+            </div>
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.Message))
+        {
+            <div class="alert alert-success">
+                @Model.Message
+            </div>
+        }
+
+        <div class="form-card">
+            <form method="post">
+                <div class="mb-3">
+                    <label class="form-label">Instructor Name</label>
+                    <input asp-for="InstructorName" class="form-control"
+                           placeholder="Enter instructor name" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="HighestDegree" class="form-label">
+                        Highest Degree Attended
+                    </label>
+                    <select asp-for="HighestDegree" class="form-select">
+                        <option value=""> -- Select Degree -- </option>
+                        <option value="Bachelor"> Bachelor </option>
+                        <option value="Master"> Master </option>
+                        <option value="Doctor"> Doctor </option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Department</label>
+                    <input asp-for="Department" class="form-control"
+                           placeholder="Enter department" />
+                </div>
+
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-primary">
+                        Add Instructor
+                    </button>
+                    <a asp-page="/Profile" class="btn btn-secondary">
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <div class="table-card">
+            <h3>Current Instructors</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Highest Degree</th>
+                        <th>Department</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var instructor in Model.Instructors)
+                    {
+                        <tr>
+                            <td>@instructor.Name</td>
+                            <td>@instructor.HighestDegree</td>
+                            <td>@instructor.Department</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>

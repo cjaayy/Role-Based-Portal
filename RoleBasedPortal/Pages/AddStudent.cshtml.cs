@@ -5,20 +5,23 @@ using RoleBasedPortal.Models;
 
 namespace RoleBasedPortal.Pages
 {
-    public class AddInstructorModel : PageModel
+    public class AddStudentModel : PageModel
     {
         [BindProperty]
-        public string InstructorName { get; set; } = "";
+        public string StudentName { get; set; } = "";
 
         [BindProperty]
-        public string HighestDegree { get; set; } = "";
+        public string Course { get; set; } = "";
 
         [BindProperty]
-        public string Department { get; set; } = "";
+        public string YearLevel { get; set; } = "";
+
+        [BindProperty]
+        public string Section { get; set; } = "";
 
         public User? CurrentUser { get; set; }
 
-        public List<Instructor> Instructors { get; set; } = new List<Instructor>();
+        public List<Student> Students { get; set; } = new List<Student>();
 
         public string Message { get; set; } = "";
 
@@ -33,12 +36,12 @@ namespace RoleBasedPortal.Pages
 
             CurrentUser = ApplicationData.Users.FirstOrDefault(u => u.Username == username);
 
-            if (CurrentUser == null || CurrentUser.Role != "Admin")
+            if (CurrentUser == null || CurrentUser.Role != "Instructor")
             {
                 return RedirectToPage("/Profile");
             }
 
-            Instructors = ApplicationData.Instructors;
+            Students = ApplicationData.Students;
 
             return Page();
         }
@@ -54,31 +57,33 @@ namespace RoleBasedPortal.Pages
 
             CurrentUser = ApplicationData.Users.FirstOrDefault(u => u.Username == username);
 
-            if (CurrentUser == null || CurrentUser.Role != "Admin")
+            if (CurrentUser == null || CurrentUser.Role != "Instructor")
             {
                 return RedirectToPage("/Profile");
             }
 
-            ApplicationData.Instructors.Add(new Instructor
+            ApplicationData.Students.Add(new Student
             {
-                Name = InstructorName,
-                HighestDegree = HighestDegree,
-                Department = Department
+                Name = StudentName,
+                Course = Course,
+                YearLevel = YearLevel,
+                Section = Section
             });
 
             ApplicationData.Users.Add(new User
             {
-                Username = InstructorName.Replace(" ", "").ToLower(),
+                Username = StudentName.Replace(" ", "").ToLower(),
                 Password = "12345",
-                FullName = InstructorName,
-                Role = "Instructor",
-                Degree = HighestDegree,
-                Department = Department
+                FullName = StudentName,
+                Role = "Student",
+                Course = Course,
+                YearLevel = YearLevel,
+                Section = Section
             });
 
-            Message = "Instructor successfully added.";
+            Message = "Student successfully added.";
 
-            Instructors = ApplicationData.Instructors;
+            Students = ApplicationData.Students;
 
             return Page();
         }

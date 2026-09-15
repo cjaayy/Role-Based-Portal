@@ -1,0 +1,126 @@
+@page
+@model RoleBasedPortal.Pages.AddStudentModel
+@{
+    ViewData["Title"] = "Add Student";
+}
+
+<div class="portal-container">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Academic Portal</h3>
+        </div>
+
+        <div class="user-summary">
+            <div class="user-icon">&#128100;</div>
+            <h5>@Model.CurrentUser?.FullName</h5>
+            <span>
+                @Model.CurrentUser?.Role
+            </span>
+        </div>
+
+        <nav class="sidebar-menu">
+            <a asp-page="/Profile" class="menu-item">
+                Profile
+            </a>
+            <a asp-page="/AddStudent" class="menu-item active">
+                Add Student
+            </a>
+            <a asp-page="/Index" class="menu-item">
+                Log Out
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <div class="top-header">
+            <div>
+                <h2>Add New Student</h2>
+                <p>Instructor Management</p>
+            </div>
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.Message))
+        {
+            <div class="alert alert-success">
+                @Model.Message
+            </div>
+        }
+
+        <div class="form-card">
+            <form method="post">
+                <div class="mb-3">
+                    <label class="form-label">Student Name</label>
+                    <input asp-for="StudentName" class="form-control"
+                           placeholder="Enter student name" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Course" class="form-label">Course</label>
+                    <select asp-for="Course" class="form-select">
+                        <option value=""> -- Select Course -- </option>
+                        <option value="BSIT"> BSIT </option>
+                        <option value="BSBA"> BSBA </option>
+                        <option value="BSCS"> BSCS </option>
+                        <option value="BSED"> BSED </option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="YearLevel" class="form-label">Year Level</label>
+                    <select asp-for="YearLevel" class="form-select">
+                        <option value=""> -- Select Year Level -- </option>
+                        <option value="1st Year"> 1st Year </option>
+                        <option value="2nd Year"> 2nd Year </option>
+                        <option value="3rd Year"> 3rd Year </option>
+                        <option value="4th Year"> 4th Year </option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Section" class="form-label">Section</label>
+                    <select asp-for="Section" class="form-select">
+                        <option value=""> -- Select Section -- </option>
+                        <option value="A"> A </option>
+                        <option value="B"> B </option>
+                        <option value="C"> C </option>
+                        <option value="D"> D </option>
+                    </select>
+                </div>
+
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-primary">
+                        Add Student
+                    </button>
+                    <a asp-page="/Profile" class="btn btn-secondary">
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <div class="table-card">
+            <h3>Current Students</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Course</th>
+                        <th>Year Level</th>
+                        <th>Section</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var student in Model.Students)
+                    {
+                        <tr>
+                            <td>@student.Name</td>
+                            <td>@student.Course</td>
+                            <td>@student.YearLevel</td>
+                            <td>@student.Section</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>

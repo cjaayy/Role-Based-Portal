@@ -1,0 +1,43 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-header">
+            <h1>Academic Portal</h1>
+            <p>Login to your account</p>
+        </div>
+       
+
+        <form method="post">
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input asp-for="Username"
+                class="form-control"
+                placeholder="Enter username"
+                autocomplete="username"/>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-level">Password</label>
+                <input asp-for="Password"
+                       class="form-control"
+                       placeholder="Enter password"
+                       autocomplete="current-password" />
+            </div>
+
+            <div class="login-buttons">
+                <button type="submit" class="btn btn-primary">
+                    Login
+                </button>
+                <button type="reset" class="btn btn-secondary">
+                    Clear
+                </button>
+            </div>
+        </form>
+    </div>
+
+</div>
